@@ -159,9 +159,4 @@ fabric.properties
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
-app.py
-config.ini
-deezer.py
-forms.py
-static/
-templates/
+
