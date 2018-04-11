@@ -43,7 +43,7 @@ def execute(id):
     path, command = get_settings()
     if path != 'None':
         print(command.format(path=path, id=id))
-        call([command.format(path=path, id=id)])
+        call([command.format(path=path, id=id)], shell=True)
         return 'success'
     else:
         return 'no setup'
