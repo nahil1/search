@@ -1,20 +1,7 @@
 import configparser
+from subprocess import call
 
 import requests
-
-
-def config_section_map(config, section):
-    dict1 = {}
-    options = config.options(section)
-    for option in options:
-        try:
-            dict1[option] = config.get(section, option)
-            if dict1[option] == -1:
-                print("skip: %s" % option)
-        except:
-            print("exception on %s!" % option)
-            dict1[option] = None
-    return dict1
 
 
 def search_album(search_term):
@@ -29,13 +16,34 @@ def search_album(search_term):
         return None
 
 
-def execute(url):
+def _get_config():
     config = configparser.ConfigParser()
     config.read('config.ini')
-    path = config_section_map(config, "execute")['path']
+    return config
+
+
+def get_settings():
+    config = _get_config()
+    path = config['SETTINGS']['path']
+    command = config['SETTINGS']['command']
+
+    return path, command
+
+
+def set_settings(path, command):
+    config = _get_config()
+    config['SETTINGS']['path'] = path
+    config['SETTINGS']['command'] = command
+
+    with open('config.ini', 'w+') as configfile:  # save
+        config.write(configfile)
+
+
+def execute(id):
+    path, command = get_settings()
     if path != 'None':
-        command = config_section_map(config, "execute")['command'].format(path=path, url=url)
-        print(command)
+        print(command.format(path=path, id=id))
+        call([command.format(path=path, id=id)])
         return 'success'
     else:
         return 'no setup'

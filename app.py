@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, session, redirect, flash
 
-from deezer import search_album, execute
-from forms import AlbumSearch
+from deezer import search_album, execute, set_settings, get_settings
+from forms import AlbumSearch, SettingsForm
 
 app = Flask(__name__)
 app.secret_key = 'vgdfhgudhfguhrdughufhgkjfdayzghidreghrfudihgurigh'
@@ -41,9 +41,13 @@ def get(id):
     return redirect(url_for('result'))
 
 
-@app.route('/settings')
+@app.route('/settings', methods=["GET", "POST"])
 def settings():
-    return redirect(url_for('index'))
+    form = SettingsForm()
+    if form.validate_on_submit():
+        set_settings(form.path.data, form.command.data)
+    path, command = get_settings()
+    return render_template('settings.html', form=form, path=path, command=command)
 
 
 if __name__ == '__main__':

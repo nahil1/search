@@ -2,7 +2,7 @@
 {% block body %}
     <form action="{{ url_for('index') }}" method="post">
         Album Name: <input type="text" name="album" placeholder="Album Name"><br>
-        <input type="submit" value="Search">
+        <input type="submit" value="Search" class="waves-effect waves-light btn">
         {{ form.csrf_token }}
     </form>
 {% endblock %}

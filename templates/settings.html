@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+    Path is the path to the executable you want to run, command is the command to run, replaces {path} with the path and
+    {id} with the album id
+    <form action="{{ url_for('settings') }}" method="post">
+        Path: <input type="text" name="path" placeholder="{{ path }}"><br>
+        Command: <input type="text" name="command" placeholder="{{ command }}"><br>
+        <input type="submit" value="Set" class="waves-effect waves-light btn">
+        {{ form.csrf_token }}
+    </form>
+
+{% endblock %}
