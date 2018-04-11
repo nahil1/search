@@ -1,0 +1,40 @@
+<!doctype html>
+<head>
+    <title>Deezer Search</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+<div class=page>
+    <h1>Deezer Search</h1>
+    <div class="container">
+        <a class="waves-effect waves-light btn black" href="{{ url_for('index') }}">Home</a>
+        <a class="waves-effect waves-light btn black" href="{{ url_for('settings') }}">Settings</a>
+    </div>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="row">
+                {% for message in messages %}
+                    <div class="col s12 m5">
+                        <div class="card-panel teal">
+                                <span class="white-text">
+                                    <div class=flash>{{ message }}</div>
+                                </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    {% block body %}{% endblock %}
+    <!--JavaScript at end of body for optimized loading-->
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+</div>
+</body>

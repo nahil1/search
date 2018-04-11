@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block body %}
+    <form action="{{ url_for('index') }}" method="post">
+        Album Name: <input type="text" name="album" placeholder="Album Name"><br>
+        <input type="submit" value="Search">
+        {{ form.csrf_token }}
+    </form>
+{% endblock %}
