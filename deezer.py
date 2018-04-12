@@ -28,6 +28,7 @@ def _make_config(config):
     config['SETTINGS'] = {}
     config['SETTINGS']['path'] = 'None'
     config['SETTINGS']['command'] = 'None'
+    config['SETTINGS']['websettings'] = 'True'
     
     with open('config.ini', 'w+') as configfile:  # save
         config.write(configfile)
@@ -36,15 +37,18 @@ def _make_config(config):
 def get_settings():
     config = _get_config()
     path = config.get('SETTINGS', 'path')
-    command = config['SETTINGS']['command']
+    command = config.get('SETTINGS', 'command')
+    websettings = config.get('SETTINGS', 'websettings')
 
-    return path, command
+    return path, command, websettings
 
 
-def set_settings(path, command):
+def set_settings(path, command, websettings):
     config = _get_config()
     config['SETTINGS']['path'] = path
     config['SETTINGS']['command'] = command
+    config['SETTINGS']['websettings'] = websettings
+    
 
     with open('config.ini', 'w+') as configfile:  # save
         config.write(configfile)

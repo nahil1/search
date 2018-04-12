@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
-    Path is the path to the executable you want to run, command is the command to run, replaces {path} with the path and
-    {id} with the album id
+    Path is the path to the executable you want to run, command is the command to run, replaces {path} with the path and {id} with the album id. Websettings enables this page, set it to "False" to dissable it.
     <form action="{{ url_for('settings') }}" method="post">
-        Path: <input type="text" name="path" placeholder="{{ path }}"><br>
-        Command: <input type="text" name="command" placeholder="{{ command }}"><br>
+        Path: <input type="text" name="path" value="{{ path }}"><br>
+        Command: <input type="text" name="command" value="{{ command }}"><br>
+        Web Settings: <input type="text" name="websettings" value="{{ websettings }}"><br>
         <input type="submit" value="Set" class="waves-effect waves-light btn">
         {{ form.csrf_token }}
     </form>

@@ -10,3 +10,4 @@ class AlbumSearch(FlaskForm):
 class SettingsForm(FlaskForm):
     path = StringField('path', validators=[DataRequired()])
     command = StringField('command', validators=[DataRequired()])
+    websettings = StringField('websettings', validators=[DataRequired()])
