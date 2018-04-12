@@ -1,7 +1,21 @@
 {% extends "layout.html" %}
 {% block body %}
     <form action="{{ url_for('index') }}" method="post">
-        Album Name: <input type="text" name="album" placeholder="Album Name"><br>
+        <p>
+            <label>
+                <input name="search_type" type="radio" value="track" checked/>
+                <span>Track</span>
+            </label>
+            <label>
+                <input name="search_type" type="radio" value="album"/>
+                <span>Album</span>
+            </label>
+            <label>
+                <input name="search_type" type="radio" value="artist"/>
+                <span>Artist</span>
+            </label>
+            <br>
+            Search Term: <input type="text" name="search_term" placeholder="Search Term"><br>
         <input type="submit" value="Search" class="waves-effect waves-light btn">
         {{ form.csrf_token }}
     </form>
