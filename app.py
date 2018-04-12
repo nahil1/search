@@ -45,10 +45,10 @@ def get(id):
 def settings():
     form = SettingsForm()
     if form.validate_on_submit():
-        set_settings(form.path.data, form.command.data, form.websettings.data)
+        set_settings(form.path.data, form.command.data, str(form.websettings.data))
     path, command, websettings = get_settings()
     if websettings.lower() == "false":
-        flash('websettings have been disabled, please edid config.ini on the server directly')
+        flash('websettings have been disabled, please edit config.ini on the server directly')
         return redirect(url_for("index"))
     return render_template('settings.html', form=form, path=path, command=command, websettings=websettings)
 
