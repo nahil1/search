@@ -1,11 +1,12 @@
-import configparser, os
+import configparser
+import os
 from subprocess import call
 
 import requests
 
 
-def search_album(search_term):
-    url = "https://api.deezer.com/search/album?q={}".format(search_term)
+def search(search_type, search_term):
+    url = "https://api.deezer.com/search/{}?q={}".format(search_type, search_term)
     data = requests.get(url)
     if data.status_code == requests.codes.ok:
         try:
@@ -48,20 +49,20 @@ def set_settings(path, command, websettings):
     config['SETTINGS']['path'] = path
     config['SETTINGS']['command'] = command
     config['SETTINGS']['websettings'] = websettings
-    
 
     with open('config.ini', 'w+') as configfile:  # save
         config.write(configfile)
 
 
 def execute(id):
-    path, command = get_settings()
+    path, command = get_settings()[0:2]
     if path != 'None':
         print(command.format(path=path, id=id))
         call([command.format(path=path, id=id)], shell=True)
         return 'success'
     else:
         return 'no setup'
-        
+
+
 if __name__ == "__main__":
-	print(get_settings())
+    print(get_settings())
