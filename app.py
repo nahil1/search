@@ -1,6 +1,6 @@
-from flask import Flask, render_template, url_for, session, redirect, flash
+from flask import Flask, render_template, url_for, redirect, flash
 
-from deezer import search_album, execute, set_settings, get_settings
+from deezer import search, execute, set_settings, get_settings
 from forms import AlbumSearch, SettingsForm
 
 app = Flask(__name__)
@@ -11,20 +11,19 @@ app.secret_key = 'vgdfhgudhfguhrdughufhgkjfdayzghidreghrfudihgurigh'
 def index():
     form = AlbumSearch()
     if form.validate_on_submit():
-        session['search_term'] = form.album.data
-        return redirect(url_for('result'))
+        return redirect(
+            url_for('result', search_type=str(form.search_type.data), search_term=str(form.search_term.data)))
     return render_template('index.html', form=form)
 
 
-@app.route('/result')
-def result():
-    if not ('search_term' in session.keys()):
-        flash('A search term is required to display results')
+@app.route('/result/<search_type>/<search_term>')
+def result(search_type, search_term):
+    if not (search_term and search_type):
+        flash('You need to search for something before we can show results')
         return redirect(url_for('index'))
-    term = session['search_term']
-    data = search_album(term)
+    data = search(search_type, search_term)
     if data:
-        return render_template('result.html', term=term, data=data)
+        return render_template('result.html', term=search_term, data=data)
     else:
         flash('No data was returned for that search term')
         return redirect(url_for('index'))

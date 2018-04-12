@@ -1,10 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField
+from wtforms import StringField, BooleanField, RadioField
 from wtforms.validators import DataRequired
 
 
 class AlbumSearch(FlaskForm):
-    album = StringField('Album Name', validators=[DataRequired()])
+    search_type = RadioField('type', choices=[('track', 'Track'), ('album', 'Album'), ('artist', 'Artist')])
+    search_term = StringField('Album Name', validators=[DataRequired()])
 
 
 class SettingsForm(FlaskForm):
