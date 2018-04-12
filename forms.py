@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, BooleanField
 from wtforms.validators import DataRequired
 
 
@@ -10,4 +10,4 @@ class AlbumSearch(FlaskForm):
 class SettingsForm(FlaskForm):
     path = StringField('path', validators=[DataRequired()])
     command = StringField('command', validators=[DataRequired()])
-    websettings = StringField('websettings', validators=[DataRequired()])
+    websettings = BooleanField('websettings')
