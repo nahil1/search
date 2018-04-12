@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
-    <p>Path is the path to the executable you want to run, command is the command to run, replaces {path} with the path
-        and {id} with the album id.</p>
+    <p>Path is the path to the executable you want to run, command is the 
+command to run, replaces {path} with the path,
+        {type} with the media type (track | album | artist} and {id} with 
+the album id.</p>
     <p>Leaving websettings enabled could allow arbitrary code to be run on your machine if
         someone accesses settings while the server is running.</p>
     <form action="{{ url_for('settings') }}" method="post">

@@ -54,11 +54,12 @@ def set_settings(path, command, websettings):
         config.write(configfile)
 
 
-def execute(id):
+def execute(media_type, id):
     path, command = get_settings()[0:2]
     if path != 'None':
-        print(command.format(path=path, id=id))
-        call([command.format(path=path, id=id)], shell=True)
+        print(command.format(path=path, type=media_type, id=id))
+        call([command.format(path=path, type=media_type, id=id)], 
+shell=True)
         return 'success'
     else:
         return 'no setup'
