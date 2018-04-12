@@ -1,4 +1,4 @@
-import configparser
+import configparser, os
 from subprocess import call
 
 import requests
@@ -18,13 +18,24 @@ def search_album(search_term):
 
 def _get_config():
     config = configparser.ConfigParser()
+    if not os.path.exists('config.ini'):
+        _make_config(config)
     config.read('config.ini')
     return config
 
 
+def _make_config(config):
+    config['SETTINGS'] = {}
+    config['SETTINGS']['path'] = 'None'
+    config['SETTINGS']['command'] = 'None'
+    
+    with open('config.ini', 'w+') as configfile:  # save
+        config.write(configfile)
+
+
 def get_settings():
     config = _get_config()
-    path = config['SETTINGS']['path']
+    path = config.get('SETTINGS', 'path')
     command = config['SETTINGS']['command']
 
     return path, command
@@ -47,3 +58,6 @@ def execute(id):
         return 'success'
     else:
         return 'no setup'
+        
+if __name__ == "__main__":
+	print(get_settings())
