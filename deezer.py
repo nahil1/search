@@ -49,7 +49,7 @@ def set_settings(path, command, websettings):
     config['SETTINGS']['path'] = path
     config['SETTINGS']['command'] = command
     config['SETTINGS']['websettings'] = websettings
-    
+
     with open('config.ini', 'w+') as configfile:  # save
         config.write(configfile)
 
@@ -62,6 +62,7 @@ def execute(id):
         return 'success'
     else:
         return 'no setup'
-        
+
+
 if __name__ == "__main__":
     print(get_settings())
