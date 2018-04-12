@@ -4,6 +4,19 @@
 
     <div class="row">
         {% for entry in data %}
+            {% if entry['type'] == 'track' %}
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">{{ entry["title"] }}</span>
+                            <a class="btn-floating halfway-fab waves-effect waves-light black"
+                               href={{ url_for('get', id=entry['id']) }}><i
+                                    class="material-icons white-text">file_download</i></a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if entry['type'] == 'album' %}
             <div class="col s6">
                 <div class="card">
                     <div class="card-image">
@@ -15,6 +28,20 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
+            {% if entry['type'] == 'album' %}
+                <div class="col s6">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ entry['picture_medium'] }}">
+                            <span class="card-title">{{ entry["name"] }}</span>
+                            <a class="btn-floating halfway-fab waves-effect waves-light black"
+                               href={{ url_for('get', id=entry['id']) }}><i
+                                    class="material-icons white-text">file_download</i></a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 
