@@ -2,7 +2,6 @@ import configparser
 import os
 from subprocess import call
 import threading
-from time import sleep
 
 import requests
 
