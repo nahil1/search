@@ -60,12 +60,12 @@ def execute(media_type, id):
     path, command = get_settings()[0:2]
     if path != 'None':
         t = threading.Thread(target=execute_thread, args=(media_type, id, path, command))
+        t.start()
         return 'started'
     else:
         return 'no setup'
         
-def execute_thread(media_type, id, path, cammand):
-    sleep(20)
+def execute_thread(media_type, id, path, command):
     print(command.format(path=path, type=media_type, id=id))
     try:
         call([command.format(path=path, type=media_type, id=id)], 
