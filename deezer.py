@@ -1,6 +1,8 @@
 import configparser
 import os
 from subprocess import call
+import threading
+from time import sleep
 
 import requests
 
@@ -57,12 +59,21 @@ def set_settings(path, command, websettings):
 def execute(media_type, id):
     path, command = get_settings()[0:2]
     if path != 'None':
-        print(command.format(path=path, type=media_type, id=id))
-        call([command.format(path=path, type=media_type, id=id)], 
-shell=True)
-        return 'success'
+        t = threading.Thread(target=execute_thread, args=(media_type, id, path, command))
+        return 'started'
     else:
         return 'no setup'
+        
+def execute_thread(media_type, id, path, cammand):
+    sleep(20)
+    print(command.format(path=path, type=media_type, id=id))
+    try:
+        call([command.format(path=path, type=media_type, id=id)], 
+shell=True)
+    except Exception as e:
+        print(e)
+    return 
+    
 
 
 if __name__ == "__main__":
