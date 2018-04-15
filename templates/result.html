@@ -10,7 +10,7 @@
                         <div class="card-content">
                             <span class="card-title">{{ entry["title"] }}</span>
                             <a class="btn-floating halfway-fab waves-effect waves-light black"
-                               href={{ url_for('get', id=entry['id']) }}><i
+                               href={{ url_for('get', id=entry['id'], media_type='track') }}><i
                                     class="material-icons white-text">file_download</i></a>
                         </div>
                     </div>
@@ -23,7 +23,8 @@
                         <img src="{{ entry['cover_medium'] }}">
                         <span class="card-title">{{ entry["title"] }}</span>
                         <a class="btn-floating halfway-fab waves-effect waves-light black"
-                           href={{ url_for('get', id=entry['id']) }}><i
+                           href={{ url_for('get', media_type='album', 
+id=entry['id']) }}><i
                                 class="material-icons white-text">file_download</i></a>
                     </div>
                 </div>
@@ -36,7 +37,8 @@
                             <img src="{{ entry['picture'] }}">
                             <span class="card-title">{{ entry["name"] }}</span>
                             <a class="btn-floating halfway-fab waves-effect waves-light black"
-                               href={{ url_for('get', id=entry['id']) }}><i
+                               href={{ url_for('get',media_type='artist', 
+id=entry['id']) }}><i
                                     class="material-icons white-text">file_download</i></a>
                         </div>
                     </div>

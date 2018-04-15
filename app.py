@@ -29,15 +29,15 @@ def result(search_type, search_term):
         return redirect(url_for('index'))
 
 
-@app.route('/get/<id>')
-def get(id):
-    result = execute(id)
+@app.route('/get/<media_type>/<id>')
+def get(media_type, id):
+    result = execute(media_type, id)
     if result == 'success':
         flash('Download Success')
-        return redirect(url_for('result'))
+        return redirect(url_for('index'))
     elif result == 'no setup':
         flash('Please enter execute instructions in settings')
-    return redirect(url_for('result'))
+    return redirect(url_for('index'))
 
 
 @app.route('/settings', methods=["GET", "POST"])
