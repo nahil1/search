@@ -1,0 +1,12 @@
+<div class="col s6">
+    <div class="card">
+        <div class="card-image">
+            <img src="{{ entry['picture'] }}">
+            <span class="card-content">{{ entry["name"] }}</span>
+            <a class="btn-floating halfway-fab waves-effect waves-light black"
+               href={{ url_for('get',media_type='artist', id=entry['id']) }}>
+                <i class="material-icons white-text">file_download</i>
+            </a>
+        </div>
+    </div>
+</div>

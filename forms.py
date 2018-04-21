@@ -4,7 +4,8 @@ from wtforms.validators import DataRequired
 
 
 class AlbumSearch(FlaskForm):
-    search_type = RadioField('type', choices=[('track', 'Track'), ('album', 'Album'), ('artist', 'Artist')])
+    search_type = RadioField('type', choices=[('track', 'Track'), ('album', 'Album'), ('artist', 'Artist'),
+                                              ('playlist', 'Playlist')])
     search_term = StringField('Album Name', validators=[DataRequired()])
 
 
