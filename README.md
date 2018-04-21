@@ -5,10 +5,9 @@ a tool to make searching deezer easier
 
 ### todo
 <ul>
-  <li>thread the external executor to prevent the page hanging in the case of slow execution</li>
   <li>add tracking of a progress file</li>
   <li>add more information about songs</li>
-  <li>easy transition from an artist to their tracks/albums, from an album to its tracks/artist</li>
+  <li>easy transition from an artist to their tracks/albums, from an album to its artist</li>
   <li>alternate source for artist artwork (?)</li>
 </ul>
 
