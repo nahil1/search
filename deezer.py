@@ -1,13 +1,22 @@
 import configparser
 import os
-from subprocess import call
 import threading
+from subprocess import call
 
 import requests
 
 
 def search(search_type, search_term):
     url = "https://api.deezer.com/search/{}?q={}".format(search_type, search_term)
+    return _api_call(url)
+
+
+def get_tracks(type, id):
+    url = "https://api.deezer.com/{type}/{id}/tracks".format(type=type, id=id)
+    return _api_call(url)
+
+
+def _api_call(url):
     data = requests.get(url)
     if data.status_code == requests.codes.ok:
         try:
@@ -16,6 +25,7 @@ def search(search_type, search_term):
             return None
     else:
         return None
+
 
 
 def _get_config():
@@ -63,16 +73,15 @@ def execute(media_type, id):
         return 'started'
     else:
         return 'no setup'
-        
+
+
 def execute_thread(media_type, id, path, command):
     print(command.format(path=path, type=media_type, id=id))
     try:
-        call([command.format(path=path, type=media_type, id=id)], 
-shell=True)
+        call([command.format(path=path, type=media_type, id=id)], shell=True)
     except Exception as e:
         print(e)
     return 
-    
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, redirect, flash, request
 
-from deezer import search, execute, set_settings, get_settings
+from deezer import search, get_tracks, execute, set_settings, get_settings
 from forms import AlbumSearch, SettingsForm
 
 app = Flask(__name__)
@@ -29,9 +29,19 @@ def search_result(search_type, search_term):
         return redirect(url_for('index'))
 
 
-@app.route('/tracklist/<name>/<id>')
-def tracklist(name, id):
-    pass
+@app.route('/tracklist/<type>/<name>/<id>')
+def tracklist(type, name, id):
+    tracks = get_tracks(type, id)
+    if not tracks:
+        flash('No data reurned for that tracklist')
+        return redirect(request.referrer)
+    return render_template('tracklist.html', term=name, data=tracks)
+
+
+@app.route('/album/<name>/<id>')
+def albums(name, id):
+    flash('feature not implemented yet')
+    return redirect(url_for('index'))
 
 
 @app.route('/get/<media_type>/<id>')

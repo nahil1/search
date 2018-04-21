@@ -1,0 +1,16 @@
+<div class="col s6">
+    <div class="card">
+        <div class="card-image">
+            <img src="{{ entry['cover_medium'] }}">
+            <span class="card-content">{{ entry["title"] }}</span>
+            <a class="btn-floating halfway-fab waves-effect waves-light black"
+               href={{ url_for('get', media_type='album', id=entry['id']) }}>
+                <i class="material-icons white-text">file_download</i>
+            </a>
+            <div class="card-action">
+                <a href="{{ url_for('tracklist', type=entry['type'], name=entry["title"], id=entry['id']) }}">Track
+                    list</a>
+            </div>
+        </div>
+    </div>
+</div>
