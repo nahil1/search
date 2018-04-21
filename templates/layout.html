@@ -11,6 +11,15 @@
 
 <body>
 <div class=page>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Deezer Search</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('settings') }}">Components</a></li>
+            </ul>
+        </div>
+    </nav>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="row">
@@ -26,11 +35,6 @@
             </div>
         {% endif %}
     {% endwith %}
-    <h1>Deezer Search</h1>
-    <div class="container">
-        <a class="waves-effect waves-light btn black" href="{{ url_for('index') }}">Home</a>
-        <a class="waves-effect waves-light btn black" href="{{ url_for('settings') }}">Settings</a>
-    </div>
     <div class="container">
         {% block body %}{% endblock %}
     </div>
