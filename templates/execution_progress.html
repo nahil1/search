@@ -24,7 +24,7 @@
             $('#log').append('<div class="col s12 m5 message' + msg.count + '">' +
                 '<div class="card-panel black">' + '' +
                 '<span class="white-text">' +
-                $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html() + '</span>' +
+                $('<div/>').text(msg.data).html() + '</span>' +
                 '</div>' +
                 '</div>');
             setTimeout(function () {

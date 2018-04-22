@@ -25,10 +25,8 @@ def progress_check():
         with open(file_name, 'w'): pass
         for line in data:
             name = line
-            print(line.split('/')[3:5])
             media_type, id = line.split('/')[3:5]
             id = id.strip('\n')
-            print(media_type, id)
             if media_type in ['track', 'album', 'playlsit']:
                 name = _api_call('https://api.deezer.com/{}/{}'.format(media_type, id))['title']
             elif type == 'artist':
