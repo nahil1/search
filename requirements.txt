@@ -3,4 +3,3 @@ requests
 flask_wtf
 wtforms
 flask_socketio
-eventlet
