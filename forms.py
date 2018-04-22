@@ -12,4 +12,5 @@ class AlbumSearch(FlaskForm):
 class SettingsForm(FlaskForm):
     path = StringField('path', validators=[DataRequired()])
     command = StringField('command', validators=[DataRequired()])
+    progress_file = StringField('progress_file', validators=[DataRequired()])
     websettings = BooleanField('websettings')

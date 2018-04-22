@@ -9,6 +9,7 @@ the album id.</p>
     <form action="{{ url_for('settings') }}" method="post">
         Path: <input type="text" name="path" value="{{ path }}"><br>
         Command: <input type="text" name="command" value="{{ command }}"><br>
+        Progress File: <input type="text" name="progress_file" value="{{ progress_file }}"><br>
         Web Settings Enabled: <label>
         <input type="checkbox" {% if websettings.lower() == 'true' %}checked="checked"{% endif %} name="websettings"/>
         <span class="white-text">invisible text for the purpose of positioning</span>
