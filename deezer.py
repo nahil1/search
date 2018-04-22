@@ -16,6 +16,10 @@ def get_tracks(type, id):
     return _api_call(url)
 
 
+def progress_check():
+    return 'progress checker called'
+
+
 def _api_call(url):
     data = requests.get(url)
     if data.status_code == requests.codes.ok:
@@ -25,7 +29,6 @@ def _api_call(url):
             return None
     else:
         return None
-
 
 
 def _get_config():
