@@ -17,11 +17,11 @@ def get_tracks(type, id):
 
 
 def progress_check():
-    file = get_settings()[3]
-    with open(file, 'r+') as file:
+    file_name = get_settings()[3]
+    with open(file_name, 'r+') as file:
         data = file.readlines()
     if data:
-        with open(file, 'w'): pass
+        with open(file_name, 'w'): pass
     return data
 
 
