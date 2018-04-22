@@ -24,10 +24,10 @@ def progress_check():
     if data:
         with open(file_name, 'w'): pass
         for line in data:
-            line.strip('\n')
             name = line
             print(line.split('/')[3:5])
             media_type, id = line.split('/')[3:5]
+            id = id.strip('\n')
             print(media_type, id)
             if media_type in ['track', 'album', 'playlsit']:
                 name = _api_call('https://api.deezer.com/{}/{}'.format(media_type, id))['title']
@@ -41,7 +41,11 @@ def _api_call(url):
     data = requests.get(url)
     if data.status_code == requests.codes.ok:
         try:
-            return data.json()['data']
+            data = data.json()
+            if 'data' in data.keys():
+                return data['data']
+            else:
+                return data
         except ValueError:
             return None
     else:
