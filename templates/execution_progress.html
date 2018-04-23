@@ -21,18 +21,7 @@
         // to the client. The data is then displayed in the "Received"
         // section of the page.
         socket.on('my_response', function (msg) {
-            $('#log').append('<div class="col s12 m5 message' + msg.count + '">' +
-                '<div class="card-panel black">' + '' +
-                '<span class="white-text">' +
-                $('<div/>').text(msg.data).html() + '</span>' +
-                '</div>' +
-                '</div>');
-            setTimeout(function () {
-                $('.message' + msg.count).remove();
-
-            }, 5000);
+            M.toast({html: "Execution completed: " + msg.data});
         });
     });
 </script>
-<h2></h2>
-<div id="log"></div>
