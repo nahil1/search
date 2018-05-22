@@ -66,8 +66,8 @@ def get(media_type, id):
 def settings():
     form = SettingsForm()
     if form.validate_on_submit():
-        set_settings(form.path.data, form.command.data, str(form.websettings.data), form.progress_file.data)
-    path, command, websettings, progress_file = get_settings()
+        set_settings(path=form.path.data, command=form.command.data, websettings=str(form.websettings.data), progress_file=form.progress_file.data)
+    path, command, websettings, progress_file = get_settings('path', 'command', 'websettings', 'progress_file')
     if websettings.lower() == "false":
         flash('websettings have been disabled, please edit config.ini on the server directly')
         return redirect(url_for("index"))

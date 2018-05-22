@@ -5,6 +5,8 @@ from subprocess import call
 
 import requests
 
+class NoPathError(Exception):
+    pass
 
 def search(search_type, search_term):
     url = "https://api.deezer.com/search/{}?q={}".format(search_type, search_term)
@@ -17,7 +19,9 @@ def get_tracks(type, id):
 
 
 def progress_check():
-    file_name = get_settings()[3]
+    file_name, = get_settings('path')
+    if not file_name:
+        raise NoPathError
     names = []
     with open(file_name, 'r+') as file:
         data = file.readlines()
@@ -69,22 +73,20 @@ def _make_config(config):
         config.write(configfile)
 
 
-def get_settings():
+def get_settings(*settings):
     config = _get_config()
-    path = config.get('SETTINGS', 'path')
-    command = config.get('SETTINGS', 'command')
-    websettings = config.get('SETTINGS', 'websettings')
-    progress_file = config.get('SETTINGS', 'progress_file')
+    values = []
+    for setting in settings:
+        values.append(config.get('SETTINGS', setting, fallback=None))
+        
+    return values
 
-    return path, command, websettings, progress_file
 
-
-def set_settings(path, command, websettings, progress_file):
+def set_settings(**settings):
     config = _get_config()
-    config['SETTINGS']['path'] = path
-    config['SETTINGS']['command'] = command
-    config['SETTINGS']['websettings'] = websettings
-    config['SETTINGS']['progress_file'] = progress_file
+    for key in settings.keys():
+        print(key)
+        config['SETTINGS'][key] = settings[key]
 
     with open('config.ini', 'w+') as configfile:  # save
         config.write(configfile)
@@ -110,4 +112,8 @@ def execute_thread(media_type, id, path, command):
 
 
 if __name__ == "__main__":
-    print(get_settings())
+    a, = get_settings('path')
+    print(a)
+    
+    b, = get_settings('banana')
+    print(b)
