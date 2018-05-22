@@ -1,10 +1,18 @@
-from flask import Flask, render_template, url_for, redirect, flash, request
+from threading import Lock, Event
 
-from deezer import search, get_tracks, execute, set_settings, get_settings
+from flask import Flask, render_template, url_for, redirect, flash, request
+from flask_socketio import SocketIO
+
+from deezer import search, get_tracks, execute, set_settings, get_settings, progress_check
 from forms import AlbumSearch, SettingsForm
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 app.secret_key = 'vgdfhgudhfguhrdughufhgkjfdayzghidreghrfudihgurigh'
+
+thread = None
+thread_lock = Lock()
+end_event = Event()
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -58,13 +66,35 @@ def get(media_type, id):
 def settings():
     form = SettingsForm()
     if form.validate_on_submit():
-        set_settings(form.path.data, form.command.data, str(form.websettings.data))
-    path, command, websettings = get_settings()
+        set_settings(path=form.path.data, command=form.command.data, websettings=str(form.websettings.data), progress_file=form.progress_file.data)
+    path, command, websettings, progress_file = get_settings('path', 'command', 'websettings', 'progress_file')
     if websettings.lower() == "false":
         flash('websettings have been disabled, please edit config.ini on the server directly')
         return redirect(url_for("index"))
-    return render_template('settings.html', form=form, path=path, command=command, websettings=websettings)
+    return render_template('settings.html', form=form, path=path, command=command, websettings=websettings,
+                           progress_file=progress_file)
+
+
+def background_thread():
+    count = 0
+    while True:
+        socketio.sleep(1)
+        data = progress_check()
+        for line in data:
+            socketio.emit('my_response',
+                          {'data': '{}'.format(line), 'count': count},
+                          namespace='/progress_check')
+            count += 1
+
+
+@socketio.on('connect', namespace='/progress_check')
+def test_connect():
+    global thread
+    print('connected')
+    with thread_lock:
+        if thread is None:
+            thread = socketio.start_background_task(target=background_thread)
 
 
 if __name__ == '__main__':
-    app.run()
+    socketio.run(app)
