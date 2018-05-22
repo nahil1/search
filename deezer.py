@@ -93,7 +93,7 @@ def set_settings(**settings):
 
 
 def execute(media_type, id):
-    path, command = get_settings()[0:2]
+    path, command = get_settings('path', 'command')
     if path != 'None':
         t = threading.Thread(target=execute_thread, args=(media_type, id, path, command))
         t.start()
@@ -117,3 +117,6 @@ if __name__ == "__main__":
     
     b, = get_settings('banana')
     print(b)
+    
+    c = get_settings('path', 'banana')
+    print(c)
