@@ -19,7 +19,7 @@ def get_tracks(type, id):
 
 
 def progress_check():
-    file_name, = get_settings('path')
+    file_name, = get_settings('progress_file')
     if not file_name:
         raise NoPathError
     names = []
