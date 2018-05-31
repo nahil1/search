@@ -5,16 +5,21 @@ from subprocess import call
 
 import requests
 
+
 class NoPathError(Exception):
     pass
+
 
 def search(search_type, search_term):
     url = "https://api.deezer.com/search/{}?q={}".format(search_type, search_term)
     return _api_call(url)
 
 
-def get_tracks(type, id):
-    url = "https://api.deezer.com/{type}/{id}/tracks".format(type=type, id=id)
+def get_tracks(item_type, item_id, limit=50):
+    if item_type == 'artist':
+        url = "https://api.deezer.com/artist/{id}/top?limit={limit}".format(limit=limit, id=item_id)
+    else:
+        url = "https://api.deezer.com/{type}/{id}/tracks".format(type=item_type, id=item_id)
     return _api_call(url)
 
 
@@ -29,12 +34,12 @@ def progress_check():
         with open(file_name, 'w'): pass
         for line in data:
             name = line
-            media_type, id = line.split('/')[3:5]
-            id = id.strip('\n')
+            media_type, item_id = line.split('/')[3:5]
+            item_id = item_id.strip('\n')
             if media_type in ['track', 'album', 'playlsit']:
-                name = _api_call('https://api.deezer.com/{}/{}'.format(media_type, id))['title']
+                name = _api_call('https://api.deezer.com/{}/{}'.format(media_type, item_id))['title']
             elif type == 'artist':
-                name = _api_call('https://api.deezer.com/{}/{}'.format(media_type, id))['name']
+                name = _api_call('https://api.deezer.com/{}/{}'.format(media_type, item_id))['name']
             names.append(name)
     return names
 
@@ -85,27 +90,26 @@ def get_settings(*settings):
 def set_settings(**settings):
     config = _get_config()
     for key in settings.keys():
-        print(key)
         config['SETTINGS'][key] = settings[key]
 
     with open('config.ini', 'w+') as configfile:  # save
         config.write(configfile)
 
 
-def execute(media_type, id):
+def execute(media_type, item_id):
     path, command = get_settings('path', 'command')
     if path != 'None':
-        t = threading.Thread(target=execute_thread, args=(media_type, id, path, command))
+        t = threading.Thread(target=execute_thread, args=(media_type, item_id, path, command))
         t.start()
         return 'started'
     else:
         return 'no setup'
 
 
-def execute_thread(media_type, id, path, command):
-    print(command.format(path=path, type=media_type, id=id))
+def execute_thread(media_type, item_id, path, command):
+    print(command.format(path=path, type=media_type, id=item_id))
     try:
-        call([command.format(path=path, type=media_type, id=id)], shell=True)
+        call([command.format(path=path, type=media_type, id=item_id)], shell=True)
     except Exception as e:
         print(e)
     return 

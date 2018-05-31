@@ -4,11 +4,11 @@
             <img src="{{ entry['picture_medium'] }}">
             <span class="card-content"><b>{{ entry["title"] }}</b></span>
             <a class="btn-floating halfway-fab waves-effect waves-light black"
-               href={{ url_for('get', media_type='playlist', id=entry['id']) }}>
+               href={{ url_for('get', media_type='playlist', item_id=entry['id']) }}>
                 <i class="material-icons white-text">file_download</i>
             </a>
             <div class="card-action">
-                <a href="{{ url_for('tracklist', type=entry['type'], name=entry["title"], id=entry['id']) }}">Track
+                <a href="{{ url_for('tracklist', item_type=entry['type'], name=entry["title"], item_id=entry['id']) }}">Track
                     list</a>
             </div>
         </div>

@@ -6,6 +6,7 @@ from flask_socketio import SocketIO
 from deezer import search, get_tracks, execute, set_settings, get_settings, progress_check
 from forms import AlbumSearch, SettingsForm
 
+
 app = Flask(__name__)
 socketio = SocketIO(app)
 app.secret_key = 'vgdfhgudhfguhrdughufhgkjfdayzghidreghrfudihgurigh'
@@ -37,24 +38,25 @@ def search_result(search_type, search_term):
         return redirect(url_for('index'))
 
 
-@app.route('/tracklist/<type>/<name>/<id>')
-def tracklist(type, name, id):
-    tracks = get_tracks(type, id)
+@app.route('/tracklist/<item_type>/<name>/<item_id>')
+def tracklist(item_type, name, item_id):
+    tracks = get_tracks(item_type, item_id)
     if not tracks:
         flash('No data reurned for that tracklist')
         return redirect(request.referrer)
+    print(tracks)
     return render_template('tracklist.html', term=name, data=tracks)
 
 
-@app.route('/album/<name>/<id>')
-def albums(name, id):
+@app.route('/album/<name>/<item_id>')
+def albums(name, item_id):
     flash('feature not implemented yet')
     return redirect(url_for('index'))
 
 
-@app.route('/get/<media_type>/<id>')
-def get(media_type, id):
-    result = execute(media_type, id)
+@app.route('/get/<media_type>/<item_id>')
+def get(media_type, item_id):
+    result = execute(media_type, item_id)
     if result == 'success':
         flash('Execute Started')
     elif result == 'no setup':
@@ -90,7 +92,6 @@ def background_thread():
 @socketio.on('connect', namespace='/progress_check')
 def test_connect():
     global thread
-    print('connected')
     with thread_lock:
         if thread is None:
             thread = socketio.start_background_task(target=background_thread)

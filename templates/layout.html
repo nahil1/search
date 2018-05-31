@@ -16,7 +16,7 @@
 <div class=page>
     <nav>
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo left">Deezer Search</a>
+            <a href="{{ url_for('index') }}" class="brand-logo left">Deezer Search</a>
             <ul id="nav-mobile" class="right">
                 <li><a href="{{ url_for('index') }}">Home</a></li>
                 <li><a href="{{ url_for('settings') }}">Settings</a></li>
@@ -28,11 +28,13 @@
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="row">
-                {% for message in messages %}
-                    {% include 'cards/message_card.html' %}
-                {% endfor %}
-            </div>
+            {% for message in messages %}
+               <script type="text/javascript" charset="utf-8">
+                   $(document).ready(function () {
+                       M.toast({html: "{{ message }}" });
+                   });
+               </script>
+            {% endfor %}
         {% endif %}
     {% endwith %}
     <div class="container">

@@ -1,15 +1,33 @@
 {% extends "layout.html" %}
 {% block body %}
-    <p>Path is the path to the executable you want to run, command is the 
-command to run, replaces {path} with the path,
-        {type} with the media type (track | album | artist} and {id} with 
-the album id.</p>
-    <p>Leaving websettings enabled could allow arbitrary code to be run on your machine if
-        someone accesses settings while the server is running.</p>
+    <p>
+        Path is the path to the executable you want to run, command is the
+        command to run, replaces {path} with the path,
+        {type} with the media type (track | album | artist} and {id} with the item id.
+    </p>
+    <p>
+        If your external program has an output file this can be put in the progress file box.
+        This expects a list of Deezer urls of the items that have been processed.
+    </p>
+    <p>
+        Leaving websettings enabled could allow arbitrary code to be run on your machine if
+        someone accesses settings while the server is running. It is recommended to disable
+        this once the server is set up
+    </p>
+
     <form action="{{ url_for('settings') }}" method="post">
-        Path: <input type="text" name="path" value="{{ path }}"><br>
-        Command: <input type="text" name="command" value="{{ command }}"><br>
-        Progress File: <input type="text" name="progress_file" value="{{ progress_file }}"><br>
+        <label>
+            Path:
+            <input type="text" name="path" value="{{ path }}">
+        </label><br>
+        <label>
+            Command:
+            <input type="text" name="command" value="{{ command }}">
+        </label><br>
+        <label>
+            Progress File:
+            <input type="text" name="progress_file" value="{{ progress_file }}">
+        </label><br>
         Web Settings Enabled: <label>
         <input type="checkbox" {% if websettings.lower() == 'true' %}checked="checked"{% endif %} name="websettings"/>
         <span class="white-text">invisible text for the purpose of positioning</span>

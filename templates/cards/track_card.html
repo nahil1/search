@@ -1,9 +1,9 @@
 <div class="col s12">
     <div class="card">
         <div class="card-content">
-            <span class="card-content">{{ entry["title"] }} | {{ entry['artist']['name'] }}</span>
+            <span class="card-content">{{ entry["title"] }} | {{ entry['artist']['name'] }} | <script> document.write(moment.utc({{ entry['duration'] }} * 1000).format('mm:ss'))</script></span>
             <a class="btn-floating halfway-fab waves-effect waves-light black"
-               href={{ url_for('get', id=entry['id'], media_type='track') }}>
+               href={{ url_for('get', item_id=entry['id'], media_type='track') }}>
                 <i class="material-icons white-text">file_download</i>
             </a>
         </div>

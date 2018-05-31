@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
-    <h1 align="center">Tracks for {{ term }} </h1><br>
+    <script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script>
+    <h1 align="center">Tracks for "{{ term }}" </h1><br>
 
     <div class="row">
         {% for entry in data %}
