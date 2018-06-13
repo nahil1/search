@@ -1,19 +1,26 @@
 from threading import Lock, Event
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_socketio import SocketIO
+from flask_login import LoginManager, current_user, login_user, login_required
+from uuid import uuid4
 
 from config import set_settings, get_settings
 from deezer import search, get_tracks, execute, progress_check
-from forms import AlbumSearch, SettingsForm
+from forms import AlbumSearch, SettingsForm, LoginForm
 
 
 app = Flask(__name__)
 socketio = SocketIO(app)
-app.secret_key = 'vgdfhgudhfguhrdughufhgkjfdayzghidreghrfudihgurigh'
+app.secret_key = str(uuid4())
+login = LoginManager(app)
+login.login_view = 'login'
+
+from user import User
 
 thread = None
 thread_lock = Lock()
 end_event = Event()
+
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -64,7 +71,36 @@ def get(media_type, item_id):
     return redirect(request.referrer)
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if not get_settings('password'):
+        form = LoginForm()
+        if form.validate_on_submit():
+            user = User()
+            user.set_password(form.password.data)
+            login_user(user)
+            flash('Password Set')
+            return redirect(request.args.get('next') or url_for('index'))
+        return render_template('login.html', form=form, set_pass=True)
+
+    if current_user.is_authenticated:
+        flash('Already Logged in')
+        return redirect(url_for('settings'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User()
+        print(form.password.data)
+        if user.check_pasword(form.password.data):
+            login_user(user)
+            flash('Login Success')
+            return redirect(request.args.get('next') or url_for('index'))
+        else:
+            flash('Login Failed')
+    return render_template('login.html', form=form)
+
+
 @app.route('/settings', methods=["GET", "POST"])
+@login_required
 def settings():
     form = SettingsForm()
     if form.validate_on_submit():

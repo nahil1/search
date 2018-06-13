@@ -15,3 +15,7 @@ class SettingsForm(FlaskForm):
     progress_file = StringField('progress_file', validators=[DataRequired()])
     websettings = BooleanField('websettings')
 
+
+class LoginForm(FlaskForm):
+    password = PasswordField('Password')
+

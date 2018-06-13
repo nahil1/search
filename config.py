@@ -27,6 +27,8 @@ def get_settings(*settings):
     values = []
     for setting in settings:
         values.append(config.get('SETTINGS', setting, fallback=None))
+    if len(values) == 1:
+        return values[0]
 
     return values
 

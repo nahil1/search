@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+    {% if set_pass %}
+
+        As this is your first time using settings please take a minute to set a password. The password will be needed in
+        the future to access the settings page. It can be reset at anytime by removing the corresponding entry in the
+        config file. The password will be securely hashed and salted and is stored locally on your device. This program
+        will never transmit your password.
+
+    {% endif %}
+    <form action="{{ url_for('login') }}" method="post">
+        <label>
+            {{ form.password.label }} {{ form.password }}
+        </label><br>
+        <input type="submit" name="command" class="waves-effect waves-light btn">
+        {{ form.csrf_token }}
+    </form>
+
+{% endblock %}
