@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, RadioField
+from wtforms import StringField, BooleanField, RadioField, PasswordField
 from wtforms.validators import DataRequired
 
 
@@ -14,3 +14,4 @@ class SettingsForm(FlaskForm):
     command = StringField('command', validators=[DataRequired()])
     progress_file = StringField('progress_file', validators=[DataRequired()])
     websettings = BooleanField('websettings')
+

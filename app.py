@@ -1,9 +1,9 @@
 from threading import Lock, Event
-
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_socketio import SocketIO
 
-from deezer import search, get_tracks, execute, set_settings, get_settings, progress_check
+from config import set_settings, get_settings
+from deezer import search, get_tracks, execute, progress_check
 from forms import AlbumSearch, SettingsForm
 
 
