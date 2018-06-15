@@ -7,6 +7,7 @@ from uuid import uuid4
 from config import set_settings, get_settings
 from deezer import search, get_tracks, execute, progress_check
 from forms import AlbumSearch, SettingsForm, LoginForm
+from user import User
 
 
 app = Flask(__name__)
@@ -15,12 +16,15 @@ app.secret_key = str(uuid4())
 login = LoginManager(app)
 login.login_view = 'login'
 
-from user import User
 
 thread = None
 thread_lock = Lock()
 end_event = Event()
 
+
+@login.user_loader
+def load_user(id):
+    return User()
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -89,7 +93,6 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User()
-        print(form.password.data)
         if user.check_pasword(form.password.data):
             login_user(user)
             flash('Login Success')
