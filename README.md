@@ -26,5 +26,13 @@ a tool to make searching deezer easier
   </tr>
   </table>
 
+---
 
+### Install:
 
+1) pkg update
+2) pkg install git python python-dev
+4) git clone https://github.com/JetElephant/search
+5) cd search
+6) pip install -r requirements.txt
+7) python app.py
