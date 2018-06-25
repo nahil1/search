@@ -5,9 +5,6 @@ a tool to make searching deezer easier
 
 ### todo
 <ul>
-  <li>add tracking of a progress file</li>
-  <li>add more information about songs</li>
-  <li>easy transition from an artist to their tracks/albums, from an album to its artist</li>
   <li>alternate source for artist artwork (?)</li>
 </ul>
 
