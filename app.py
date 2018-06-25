@@ -77,7 +77,7 @@ def get(media_type, item_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if not get_settings('password'):
+    if (not get_settings('password')) or get_settings('password') == 'None':
         form = LoginForm()
         if form.validate_on_submit():
             user = User()
