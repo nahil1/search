@@ -16,6 +16,7 @@ def _make_config(config):
     config['SETTINGS']['command'] = 'None'
     config['SETTINGS']['websettings'] = 'True'
     config['SETTINGS']['progress_file'] = 'output.txt'
+    config['SETTINGS']['quality'] = 'MP3_320'
     config['SETTINGS']['password'] = 'None'
 
     with open('config.ini', 'w+') as configfile:  # save

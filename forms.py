@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, RadioField, PasswordField
+from wtforms import StringField, BooleanField, RadioField, PasswordField, SelectField
 from wtforms.validators import DataRequired
 
 
@@ -13,6 +13,7 @@ class SettingsForm(FlaskForm):
     path = StringField('path', validators=[DataRequired()])
     command = StringField('command', validators=[DataRequired()])
     progress_file = StringField('progress_file', validators=[DataRequired()])
+    quality = SelectField('quality', choices = [('MP3_128', 'MP3_128'), ('MP3_320', 'MP3_320'), ('FLAC', 'FLAC')], validators=[DataRequired()])
     websettings = BooleanField('websettings')
 
 

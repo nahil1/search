@@ -59,19 +59,19 @@ def _api_call(url):
 
 
 def execute(media_type, item_id):
-    path, command = get_settings('path', 'command')
-    if path != 'None':
-        t = threading.Thread(target=execute_thread, args=(media_type, item_id, path, command))
+    path, command, quality = get_settings('path', 'command', 'quality')
+    if command != 'None':
+        t = threading.Thread(target=execute_thread, args=(media_type, item_id, path, command, quality))
         t.start()
         return 'started'
     else:
         return 'no setup'
 
 
-def execute_thread(media_type, item_id, path, command):
-    print(command.format(path=path, type=media_type, id=item_id))
+def execute_thread(media_type, item_id, path, command, quality):
+    print(command.format(path=path, type=media_type, id=item_id, quality=quality))
     try:
-        call([command.format(path=path, type=media_type, id=item_id)], shell=True)
+        call([command.format(path=path, type=media_type, id=item_id, quality=quality)], shell=True)
     except Exception as e:
         print(e)
     return 

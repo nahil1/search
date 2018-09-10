@@ -107,13 +107,12 @@ def login():
 def settings():
     form = SettingsForm()
     if form.validate_on_submit():
-        set_settings(path=form.path.data, command=form.command.data, websettings=str(form.websettings.data), progress_file=form.progress_file.data)
-    path, command, websettings, progress_file = get_settings('path', 'command', 'websettings', 'progress_file')
+        set_settings(path=form.path.data, command=form.command.data, websettings=str(form.websettings.data), progress_file=form.progress_file.data, quality=form.quality.data)
+    path, command, websettings, progress_file, quality = get_settings('path', 'command', 'websettings', 'progress_file', 'quality')
     if websettings.lower() == "false":
         flash('websettings have been disabled, please edit config.ini on the server directly')
         return redirect(url_for("index"))
-    return render_template('settings.html', form=form, path=path, command=command, websettings=websettings,
-                           progress_file=progress_file)
+    return render_template('settings.html', form=form, path=path, command=command, websettings=websettings, progress_file=progress_file, quality=quality)
 
 
 def background_thread():

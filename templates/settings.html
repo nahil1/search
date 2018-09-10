@@ -3,7 +3,8 @@
     <p>
         Path is the path to the executable you want to run, command is the
         command to run, replaces {path} with the path,
-        {type} with the media type (track | album | artist} and {id} with the item id.
+        {type} with the link type (track | album | artist}, {id} with the item id and
+        {quality} with download quality (MP3_128|MP3_320|FLAC). 
     </p>
     <p>
         If your external program has an output file this can be put in the progress file box.
@@ -24,6 +25,10 @@
             Progress File:
             <input type="text" name="progress_file" value="{{ progress_file }}">
         </label><br>
+        <label>
+            Quality:
+        </label><br>
+        {{ form.quality }}
         Web Settings Enabled: <label>
         <input type="checkbox" {% if websettings.lower() == 'true' %}checked="checked"{% endif %} name="websettings"/>
         <span class="white-text">invisible text for the purpose of positioning</span>
